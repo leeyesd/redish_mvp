@@ -1,4 +1,4 @@
-# Plati Worker 배포 안내!
+# Plati Worker 배포 안내
 
 Cloudflare Workers Static Assets 방식으로 배포하는 구성입니다.
 
