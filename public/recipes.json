@@ -1,0 +1,110 @@
+[
+  {
+    "id": "chicken-tofu-ball",
+    "name": "닭고기 두부 완자",
+    "proteins": ["chicken", "tofu"],
+    "batch_servings": 2,
+    "ingredients": ["다진 닭고기", "두부", "당근", "양파", "계란", "전분"],
+    "note": "부드럽게 구워 오늘은 완자, 다음 끼니는 덮밥 토핑으로 쓰기 좋아요.",
+    "adult_tip": "어른용은 간장+고춧가루+참기름 양념장만 추가"
+  },
+  {
+    "id": "beef-egg-rice",
+    "name": "소고기 계란 채소덮밥",
+    "proteins": ["beef", "egg"],
+    "batch_servings": 2,
+    "ingredients": ["다진 소고기", "계란", "애호박", "양파", "밥", "간장"],
+    "note": "소고기 볶음을 넉넉히 만들어 두면 다음 날 주먹밥 속으로 바꾸기 쉬워요.",
+    "adult_tip": "어른용은 고추장 한 숟갈로 비빔덮밥"
+  },
+  {
+    "id": "pork-tofu-stew",
+    "name": "안매운 돼지고기 두부조림",
+    "proteins": ["pork", "tofu"],
+    "batch_servings": 2,
+    "ingredients": ["돼지고기 다짐육", "두부", "무", "대파", "간장", "다시마육수"],
+    "note": "국물 자작하게 만들면 첫날은 조림, 다음 날은 밥 비벼 먹기 좋아요.",
+    "adult_tip": "어른용은 청양고추와 고춧가루를 따로 추가"
+  },
+  {
+    "id": "fish-egg-pancake",
+    "name": "흰살생선 계란전",
+    "proteins": ["fish", "egg"],
+    "batch_servings": 2,
+    "ingredients": ["흰살생선살", "계란", "부침가루", "브로콜리", "양파"],
+    "note": "작게 부쳐 냉장해두면 다음 끼니에 밥반찬으로 바로 꺼내기 좋아요.",
+    "adult_tip": "어른용은 초간장에 고춧가루 톡톡"
+  },
+  {
+    "id": "salmon-cheese-bake",
+    "name": "연어 치즈 감자구이",
+    "proteins": ["salmon", "cheese"],
+    "batch_servings": 2,
+    "ingredients": ["연어", "감자", "치즈", "양파", "브로콜리", "우유"],
+    "note": "감자를 으깨 깔고 연어를 올리면 아이가 먹기 편한 부드러운 식감이 돼요.",
+    "adult_tip": "어른용은 후추와 칠리오일을 식탁에서 추가"
+  },
+  {
+    "id": "shrimp-egg-fried-rice",
+    "name": "새우 계란 채소볶음밥",
+    "proteins": ["shrimp", "egg"],
+    "batch_servings": 2,
+    "ingredients": ["새우", "계란", "밥", "당근", "완두콩", "양파"],
+    "note": "간을 약하게 해두고 첫날 볶음밥, 다음 날 주먹밥으로 소분해요.",
+    "adult_tip": "어른용은 스리라차나 고추기름을 따로"
+  },
+  {
+    "id": "bean-cheese-patty",
+    "name": "콩 치즈 미니패티",
+    "proteins": ["bean", "cheese"],
+    "batch_servings": 2,
+    "ingredients": ["삶은 콩", "치즈", "감자", "양파", "빵가루"],
+    "note": "콩을 으깨 패티로 만들면 단백질 보충용 사이드로 돌려쓰기 좋아요.",
+    "adult_tip": "어른용은 매콤 토마토소스 곁들이기"
+  },
+  {
+    "id": "chicken-shrimp-noodle",
+    "name": "닭새우 간장쌀국수",
+    "proteins": ["chicken", "shrimp"],
+    "batch_servings": 2,
+    "ingredients": ["닭고기", "새우", "쌀국수", "숙주", "양파", "간장"],
+    "note": "육수와 고명을 따로 보관하면 다음 날에도 면만 삶아 새로 먹는 느낌이 나요.",
+    "adult_tip": "어른용은 라임+고추절임 추가"
+  },
+  {
+    "id": "beef-tofu-curry",
+    "name": "소고기 두부 순한카레",
+    "proteins": ["beef", "tofu"],
+    "batch_servings": 2,
+    "ingredients": ["소고기", "두부", "감자", "당근", "양파", "순한 카레가루"],
+    "note": "카레는 대량 조리 후 소분하기 좋아서 바쁜 날 저녁 백업으로 든든해요.",
+    "adult_tip": "어른용은 매운 카레가루나 칠리파우더 추가"
+  },
+  {
+    "id": "pork-egg-soboro",
+    "name": "돼지고기 계란 소보로밥",
+    "proteins": ["pork", "egg"],
+    "batch_servings": 2,
+    "ingredients": ["돼지고기 다짐육", "계란", "밥", "시금치", "당근", "간장"],
+    "note": "고기 소보로와 계란을 따로 만들어 두면 덮밥, 김밥, 주먹밥으로 바꿀 수 있어요.",
+    "adult_tip": "어른용은 고추장 양념을 따로 비비기"
+  },
+  {
+    "id": "fish-tofu-soup",
+    "name": "흰살생선 두부맑은국",
+    "proteins": ["fish", "tofu"],
+    "batch_servings": 2,
+    "ingredients": ["흰살생선", "두부", "무", "애호박", "대파", "다시마"],
+    "note": "첫날은 국으로, 다음 날은 밥 말아 부드러운 한 그릇으로 먹기 좋아요.",
+    "adult_tip": "어른용은 다진 마늘과 청양고추를 따로"
+  },
+  {
+    "id": "salmon-egg-riceball",
+    "name": "연어 계란 주먹밥",
+    "proteins": ["salmon", "egg"],
+    "batch_servings": 2,
+    "ingredients": ["연어", "계란", "밥", "김가루", "오이", "참기름"],
+    "note": "연어를 구워 잘게 부수면 주먹밥과 덮밥 양쪽으로 쓰기 쉬워요.",
+    "adult_tip": "어른용은 와사비간장이나 매콤마요 추가"
+  }
+]
