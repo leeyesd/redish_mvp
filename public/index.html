@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plati</title>
+<style>
+  @font-face {
+    font-family: "Kkukkukk";
+    src: url("./assets/fonts/MemomentKkukkukk.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    --ink: #050505;
+    --muted: #515151;
+    --paper: #fbfaf3;
+    --red: #f35a42;
+    --blue: #a9c3e8;
+    --lavender: #c9bfff;
+    --pink: #efbed7;
+    --yellow: #f2ef56;
+    --green: #71b394;
+    --brown: #bd806f;
+    --shadow: 0 16px 36px rgba(0, 0, 0, .08);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Kkukkukk", "Apple SD Gothic Neo", "Pretendard", system-ui, sans-serif;
+    color: var(--ink);
+    background: #f2f0e8;
+  }
+
+  button, input { font: inherit; }
+
+  .app {
+    position: relative;
+    width: min(430px, 100%);
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 30px 28px 48px;
+    background: var(--paper);
+    box-shadow: var(--shadow);
+  }
+
+  .app::before,
+  .app::after {
+    content: none;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    background: transparent;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0;
+  }
+
+  .hero {
+    margin: 34px 0 20px;
+    text-align: left;
+  }
+
+  h1 {
+    margin: 0 auto;
+    max-width: 350px;
+    font-size: clamp(38px, 11vw, 54px);
+    line-height: .92;
+    letter-spacing: 0;
+    text-wrap: balance;
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  .mark {
+    display: inline-block;
+    color: var(--ink);
+  }
+
+  h1 .red-word {
+    color: var(--red);
+  }
+
+  .protein-wrap {
+    margin-top: 32px;
+    padding: 0;
+    background: transparent;
+  }
+
+  .protein-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .protein-card {
+    position: relative;
+    min-height: 148px;
+    border: 0;
+    border-radius: 34px;
+    background: var(--tone);
+    box-shadow: none;
+    cursor: pointer;
+    transform: translateY(0);
+    transition: transform .16s ease, filter .16s ease, opacity .16s ease, box-shadow .16s ease;
+    overflow: hidden;
+  }
+
+  .protein-card::before {
+    content: none;
+  }
+
+  .protein-card::after {
+    content: none;
+  }
+
+  .protein-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .protein-card.selected {
+    transform: translateY(-7px);
+    filter: saturate(1.08) contrast(1.04);
+    box-shadow:
+      0 22px 38px rgba(0, 0, 0, .24),
+      0 8px 14px rgba(0, 0, 0, .15);
+  }
+
+  .protein-card.selected .check { opacity: 1; transform: scale(1); }
+
+  .protein-inner {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 19px 19px 17px;
+  }
+
+  .protein-icon {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    margin-top: auto;
+  }
+
+  .protein-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+  }
+
+  .protein-name {
+    font-size: 19px;
+    line-height: 1.05;
+    color: #000;
+  }
+
+  .check {
+    position: absolute;
+    right: 13px;
+    bottom: 13px;
+    z-index: 2;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 999px;
+    background: #000;
+    color: #fff;
+    opacity: 0;
+    transform: scale(.6);
+    transition: .16s ease;
+  }
+
+  .subcopy {
+    max-width: 310px;
+    margin: 24px auto 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+    text-align: center;
+    font-weight: 400;
+    white-space: pre-line;
+  }
+
+  .action-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+  }
+
+  .make-btn, .reset-btn {
+    border: 0;
+    border-radius: 999px;
+    padding: 12px 16px;
+    cursor: pointer;
+    box-shadow: none;
+    transition: transform .12s ease, opacity .12s ease;
+  }
+
+  .make-btn {
+    background: #000;
+    color: #fff;
+  }
+
+  .make-btn:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+  }
+
+  .reset-btn { background: #ece8dd; color: #000; }
+
+  .result-reset {
+    margin: 0 18px 18px;
+    width: calc(100% - 36px);
+  }
+
+  .make-btn:not(:disabled):hover,
+  .reset-btn:hover {
+    transform: translateY(-3px);
+  }
+
+  .results {
+    display: none;
+    margin-top: 34px;
+    border: 0;
+    border-radius: 32px;
+    background: #fff;
+    box-shadow: none;
+    overflow: hidden;
+  }
+
+  .results.visible { display: block; }
+
+  .result-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px;
+    border-bottom: 1px solid #eee9de;
+    background: #fff;
+  }
+
+  .result-title {
+    font-size: 22px;
+    color: #000;
+  }
+
+  .selected-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .tag {
+    border: 0;
+    border-radius: 999px;
+    padding: 6px 10px;
+    background: #fff;
+    font-size: 13px;
+    background: #ece8dd;
+    color: #000;
+  }
+
+  .schedule {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 18px;
+  }
+
+  .day-card {
+    border: 0;
+    border-radius: 24px;
+    background: #f5f2ea;
+    box-shadow: none;
+    padding: 15px;
+  }
+
+  .day-card:nth-child(3n+1) { background: #f5f2ea; }
+  .day-card:nth-child(3n+2) { background: #ece8dd; }
+  .day-card:nth-child(3n) { background: #f8f0d8; }
+
+  .day-label {
+    display: inline-block;
+    border: 0;
+    border-radius: 999px;
+    padding: 5px 9px;
+    background: #000;
+    color: #fff;
+    font-size: 12px;
+  }
+
+  .meal-name {
+    margin-top: 12px;
+    font-size: 19px;
+    line-height: 1.28;
+    color: #000;
+  }
+
+  .meal-meta {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  .batch {
+    display: inline-block;
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 6px 8px;
+    background: #fff;
+    color: #000;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .shopping {
+    padding: 0 18px 18px;
+  }
+
+  .shopping-box {
+    border: 0;
+    border-radius: 24px;
+    background: #f5f2ea;
+    padding: 15px;
+  }
+
+  .shopping-title {
+    color: #000;
+    margin-bottom: 10px;
+  }
+
+  .shopping-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .shop-item {
+    border: 0;
+    border-radius: 999px;
+    padding: 7px 10px;
+    background: #fff;
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  .empty {
+    display: none;
+    margin-top: 18px;
+    border: 0;
+    border-radius: 24px;
+    padding: 14px;
+    background: #fff;
+    box-shadow: none;
+    text-align: center;
+  }
+
+  .empty.visible { display: block; }
+
+  @media (max-width: 430px) {
+    body { background: var(--paper); }
+    .app { min-height: 100vh; margin: 0 auto; box-shadow: none; }
+    .result-head { align-items: flex-start; flex-direction: column; }
+    .selected-tags { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+<main class="app">
+  <div class="brand">Plati</div>
+
+  <section class="hero">
+    <h1><span class="mark">3가지 고르면</span><br><span class="red-word">저녁메뉴</span> 고민 끝</h1>
+
+    <div class="protein-wrap" aria-label="단백질 선택">
+      <div class="protein-grid" id="protein-grid"></div>
+    </div>
+
+    <p class="subcopy">아이 것 따로 요리하지 마세요.
+양념만 추가하면 되는 '일타이피' 메뉴만 나와요!</p>
+
+    <div class="action-row">
+      <button class="make-btn" id="make-btn" disabled>저녁메뉴 보기</button>
+    </div>
+
+    <div class="empty" id="empty">선택한 단백질에 맞는 레시피가 아직 부족해요. recipes.json에 메뉴를 더 넣어주세요.</div>
+  </section>
+
+  <section class="results" id="results" aria-live="polite">
+    <div class="result-head">
+      <div class="result-title">이번 주 저녁 루틴</div>
+      <div class="selected-tags" id="selected-tags"></div>
+    </div>
+    <div class="schedule" id="schedule"></div>
+    <div class="shopping">
+      <div class="shopping-box">
+        <div class="shopping-title">한 번 장볼 것</div>
+        <div class="shopping-list" id="shopping-list"></div>
+      </div>
+    </div>
+    <button class="reset-btn result-reset" id="reset-btn">다시 고르기</button>
+  </section>
+</main>
+
+<script>
+const proteins = [
+  { id: 'chicken', name: '닭고기', icon: 'drumstick', tone: '#f2a095' },
+  { id: 'beef', name: '소고기', icon: 'steak', tone: '#d9847c' },
+  { id: 'pork', name: '돼지고기', icon: 'meat', tone: '#efb8ad' },
+  { id: 'fish', name: '흰살생선', icon: 'fish', tone: '#b9d3ea' },
+  { id: 'salmon', name: '연어', icon: 'fish', tone: '#8fb8d8' },
+  { id: 'shrimp', name: '새우', icon: 'shrimp', tone: '#a9c8e5' },
+  { id: 'tofu', name: '두부', icon: 'cube', tone: '#b8ada0' },
+  { id: 'egg', name: '계란', icon: 'egg', tone: '#c3ad7c' },
+  { id: 'bean', name: '콩', icon: 'beans', tone: '#b9866d' },
+  { id: 'cheese', name: '치즈', icon: 'cheese', tone: '#c79b6a' }
+];
+
+const icons = {
+  drumstick: '<svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#f28c2f" d="M33 7 48 9 58 20 55 35 43 46 27 44 18 32 20 17z"/><path fill="#d85f32" opacity=".58" d="M42 10 58 20 55 35 43 46 36 36 38 20z"/><path fill="#f5d6a6" d="M18 35 9 43 7 52 14 58 23 55 30 45z"/><path fill="#fff0c9" opacity=".55" d="M29 13 43 12 50 19 38 20z"/></svg>',
+  steak: '<svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#b74f45" d="M13 13 35 6 54 17 59 36 48 53 25 58 8 47 5 29z"/><path fill="#8f332d" opacity=".55" d="M35 6 54 17 59 36 44 34 31 23z"/><path fill="#f2c3ae" d="M22 24 35 20 44 28 42 40 29 45 18 38z"/><path fill="#fff3e4" opacity=".48" d="M24 26 34 23 39 28 30 31z"/></svg>',
+  meat: '<svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#e67468" d="M11 17 25 7 39 10 46 20 58 27 55 43 43 51 26 50 14 39 6 30z"/><path fill="#c74e49" opacity=".54" d="M39 10 46 20 58 27 55 43 42 37 36 24z"/><path fill="#ffd3c8" d="M25 22 36 20 43 27 41 37 30 41 21 35z"/><path fill="#fff2ed" opacity=".5" d="M27 24 36 23 39 27 29 29z"/></svg>',
+  fish: '<svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#227a91" d="M8 34 18 21 38 14 55 24 60 36 48 47 28 49 17 42z"/><path fill="#0f5b6b" opacity=".6" d="M38 14 55 24 60 36 48 47 31 41 34 25z"/><path fill="#83c6d5" opacity=".72" d="M18 21 8 12 8 34z"/><circle cx="47" cy="29" r="3" fill="#083f4c"/><path fill="#d3eef3" opacity=".45" d="M21 25 36 20 47 25 30 29z"/></svg>',
+  shrimp: '<svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#ef7c2f" d="M48 8 59 19 57 34 45 48 27 56 12 52 5 41 11 30 25 30 32 39 42 33 44 22 35 19 28 15 33 8z"/><path fill="#c95429" opacity=".55" d="M48 8 59 19 57 34 45 48 42 33 44 22z"/><path fill="#ffd1a6" opacity=".62" d="M17 34 28 35 33 42 24 45 14 42z"/><circle cx="47" cy="20" r="3" fill="#5d251a"/></svg>',
+  cube: '<svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#f5efe2" d="M10 15 33 8 55 18 52 49 27 57 8 44z"/><path fill="#e0d6c8" d="M33 8 55 18 34 27 10 15z"/><path fill="#c9bfb2" opacity=".55" d="M34 27 55 18 52 49 27 57z"/><path fill="#ffffff" opacity=".62" d="M15 18 32 13 43 18 26 22z"/></svg>',
+  egg: '<svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#fff3d4" d="M32 6 45 14 54 31 52 47 40 58 24 58 12 47 10 31 19 14z"/><path fill="#ead9b5" opacity=".5" d="M45 14 54 31 52 47 40 58 33 43 35 24z"/><path fill="#f3bd25" d="M25 27 36 24 44 32 42 43 31 48 22 41z"/><path fill="#fff9e9" opacity=".58" d="M23 15 34 11 42 16 29 20z"/></svg>',
+  beans: '<svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#7a4f39" d="M15 15 29 8 41 16 42 31 31 43 17 41 8 30z"/><path fill="#4f7f48" d="M34 26 49 20 59 30 57 46 44 55 30 49 27 35z"/><path fill="#5a3528" opacity=".48" d="M29 8 41 16 42 31 31 43 28 27z"/><path fill="#2f5f36" opacity=".45" d="M49 20 59 30 57 46 44 55 42 39z"/></svg>',
+  cheese: '<svg viewBox="0 0 64 64" aria-hidden="true"><path fill="#f1c229" d="M7 44 46 11 58 15 57 53 17 55z"/><path fill="#d89e1e" opacity=".55" d="M46 11 58 15 57 53 38 45z"/><path fill="#fff06a" opacity=".55" d="M16 43 46 17 52 19 27 40z"/><circle cx="39" cy="39" r="5" fill="#b77817" opacity=".55"/><circle cx="48" cy="27" r="4" fill="#b77817" opacity=".45"/></svg>'
+};
+
+let selected = [];
+let recipes = [];
+
+const grid = document.getElementById('protein-grid');
+const makeBtn = document.getElementById('make-btn');
+const resetBtn = document.getElementById('reset-btn');
+const results = document.getElementById('results');
+const empty = document.getElementById('empty');
+
+init();
+
+async function init() {
+  renderProteinCards();
+  await loadRecipes();
+  makeBtn.addEventListener('click', makeSchedule);
+  resetBtn.addEventListener('click', resetSelection);
+}
+
+function renderProteinCards() {
+  grid.innerHTML = proteins.map((protein) => `
+    <button class="protein-card" style="--tone:${protein.tone}" data-id="${protein.id}" aria-pressed="false">
+      <span class="check">✓</span>
+      <span class="protein-inner">
+        <span class="protein-name">${protein.name}</span>
+        <span class="protein-icon">${icons[protein.icon]}</span>
+      </span>
+    </button>
+  `).join('');
+
+  grid.querySelectorAll('.protein-card').forEach((card) => {
+    card.addEventListener('click', () => toggleProtein(card.dataset.id));
+  });
+}
+
+async function loadRecipes() {
+  try {
+    const response = await fetch('/recipes.json');
+    recipes = await response.json();
+  } catch {
+    recipes = [];
+  }
+}
+
+function toggleProtein(id) {
+  if (selected.includes(id)) {
+    selected = selected.filter((item) => item !== id);
+  } else if (selected.length < 3) {
+    selected = [...selected, id];
+  }
+
+  updateSelection();
+}
+
+function updateSelection() {
+  grid.querySelectorAll('.protein-card').forEach((card) => {
+    const isSelected = selected.includes(card.dataset.id);
+    card.classList.toggle('selected', isSelected);
+    card.setAttribute('aria-pressed', String(isSelected));
+  });
+
+  makeBtn.disabled = selected.length !== 3;
+  results.classList.remove('visible');
+  empty.classList.remove('visible');
+}
+
+function makeSchedule() {
+  const matches = recipes
+    .map((recipe) => ({
+      ...recipe,
+      score: recipe.proteins.filter((protein) => selected.includes(protein)).length
+    }))
+    .filter((recipe) => recipe.score > 0)
+    .sort((a, b) => b.score - a.score || b.batch_servings - a.batch_servings);
+
+  if (!matches.length) {
+    empty.classList.add('visible');
+    results.classList.remove('visible');
+    return;
+  }
+
+  const picked = pickBalanced(matches, selected);
+  const days = ['오늘', '내일', '모레', '4일차', '5일차', '6일차'];
+  const schedule = buildSchedule(picked, days);
+
+  renderResults(schedule, picked);
+}
+
+function pickBalanced(matches, selectedIds) {
+  const picked = [];
+  selectedIds.forEach((protein) => {
+    const recipe = matches.find((item) => item.proteins.includes(protein) && !picked.includes(item));
+    if (recipe) picked.push(recipe);
+  });
+
+  matches.forEach((recipe) => {
+    if (picked.length < 4 && !picked.includes(recipe)) picked.push(recipe);
+  });
+
+  return picked.slice(0, 4);
+}
+
+function buildSchedule(picked, days) {
+  const schedule = [];
+  let dayIndex = 0;
+
+  picked.forEach((recipe) => {
+    const servings = Math.max(1, Math.min(recipe.batch_servings || 2, 2));
+    for (let i = 0; i < servings && dayIndex < days.length; i += 1) {
+      schedule.push({
+        day: days[dayIndex],
+        recipe,
+        repeat: i > 0
+      });
+      dayIndex += 1;
+    }
+  });
+
+  return schedule.slice(0, 6);
+}
+
+function renderResults(schedule, picked) {
+  const tags = document.getElementById('selected-tags');
+  const scheduleEl = document.getElementById('schedule');
+  const shopping = document.getElementById('shopping-list');
+
+  tags.innerHTML = selected.map((id) => `<span class="tag">${getProteinName(id)}</span>`).join('');
+
+  scheduleEl.innerHTML = schedule.map((item) => `
+    <article class="day-card">
+      <div class="day-label">${item.day}${item.repeat ? ' · 소분' : ' · 조리'}</div>
+      <div class="meal-name">${item.recipe.name}</div>
+      <div class="meal-meta">${item.recipe.note}</div>
+      <div class="batch">${item.recipe.adult_tip}</div>
+    </article>
+  `).join('');
+
+  const ingredients = [...new Set(picked.flatMap((recipe) => recipe.ingredients))];
+  shopping.innerHTML = ingredients.map((item) => `<span class="shop-item">${item}</span>`).join('');
+
+  empty.classList.remove('visible');
+  results.classList.add('visible');
+  results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function resetSelection() {
+  selected = [];
+  updateSelection();
+}
+
+function getProteinName(id) {
+  return proteins.find((protein) => protein.id === id)?.name || id;
+}
+</script>
+</body>
+</html>
