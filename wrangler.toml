@@ -1,0 +1,8 @@
+name = "plati"
+main = "src/index.js"
+compatibility_date = "2026-05-31"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = ["/api/*"]
